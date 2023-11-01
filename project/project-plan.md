@@ -1,28 +1,48 @@
 # Project Plan
 
 ## Title
-Hello World!
+
+Quantifying Market Sentiment: An In-Depth Analysis of Social Media and News Impact on Stock Prices
 
 ## Main Question
 
-1. Does writing an example question help students write better project plans?
+1. To what extent do sentiments expressed on social media and news impact stock prices?
 
 ## Description
-<!-- Describe your data science project in max. 200 words. Consider writing about why and how you attempt it. -->
-XY is an important problem, because... This projects analyzes XY, using method A. The results can give insights into...
+
+In this project, we aim to explore the relationship between social media sentiment and news sentiment and their influence on stock prices. We'll perform sentiment analysis on a dataset of social media posts and news articles related to specific stocks and analyze their impact on stock price movements. By investigating this relationship, we aim to provide insights for investors and traders.
 
 ## Datasources
-<!-- Describe each datasources you plan to use in a section. Use the prefic "DatasourceX" where X is the id of the datasource. -->
 
-### Datasource1: ExampleSource
-* Metadata URL: https://mobilithek.info/offers/-6901989592576801458
-* Data URL: https://raw.githubusercontent.com/od-ms/radverkehr-zaehlstellen/main/100035541/2019-01.csv
-* Data Type: CSV
+### Datasource1: Social Media Data
+* Metadata URL: [Metadata URL, if available]
+* Data URL: [Data URL]
+* Data Type: [Data Type, e.g., JSON, API]
 
-Short description of the DataSource.
+[Description of the social media data source, including details on the type of social media platform, the kind of posts, and the date range of data.]
+
+### Datasource2: News Articles Data
+* Metadata URL: [Metadata URL, if available]
+* Data URL: [Data URL]
+* Data Type: [Data Type, e.g., CSV, JSON]
+
+[Description of the news articles data source, including information on the news outlets, topics, and date range.]
+
+### Datasource3: Stock Price Data
+* Metadata URL: [Metadata URL, if available]
+* Data URL: [Data URL]
+* Data Type: [Data Type, e.g., CSV, API]
+
+[Description of the stock price data source, including the stock exchanges, companies, and date range.]
 
 ## Work Packages
-1. Example Issue [#1][i1]
-2. 
 
-[i1]: https://github.com/jvalue/made-template/issues/1
+1. Data Collection and Preprocessing
+2. Sentiment Analysis on Social Media Data
+3. Sentiment Analysis on News Articles Data
+4. Integration of Sentiment Data with Stock Price Data
+5. Statistical Analysis and Modeling
+6. Visualization of Results
+7. Final Report and Insights
+
+[Provide a list of work packages that outline the major tasks and objectives of your project. Each work package should have a corresponding link to an issue on your project's GitHub repository for tracking progress.]
