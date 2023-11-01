@@ -14,26 +14,25 @@ In this project, we aim to explore the relationship between social media sentime
 
 ## Datasources
 
-### Datasource1: Social Media Data
+### Datasource1: Stock Price Data
+* Metadata URL: https://www.kaggle.com/datasets/mattiuzc/stock-exchange-data/data
+* Data URL: https://www.kaggle.com/datasets/mattiuzc/stock-exchange-data?select=indexData.csv
+* Data Type: CSV
+* Description: Daily price data for indexes tracking stock exchanges from all over the world (United States, China, Canada, Germany, Japan, and more). The data was all collected from Yahoo Finance, which had several decades of data available for most exchanges.
+
+### Datasource2: Social Media Data
 * Metadata URL: [Metadata URL, if available]
 * Data URL: [Data URL]
 * Data Type: [Data Type, e.g., JSON, API]
 
 [Description of the social media data source, including details on the type of social media platform, the kind of posts, and the date range of data.]
 
-### Datasource2: News Articles Data
+### Datasource3: News Articles Data
 * Metadata URL: [Metadata URL, if available]
 * Data URL: [Data URL]
 * Data Type: [Data Type, e.g., CSV, JSON]
 
 [Description of the news articles data source, including information on the news outlets, topics, and date range.]
-
-### Datasource3: Stock Price Data
-* Metadata URL: [Metadata URL, if available]
-* Data URL: [Data URL]
-* Data Type: [Data Type, e.g., CSV, API]
-
-[Description of the stock price data source, including the stock exchanges, companies, and date range.]
 
 ## Work Packages
 
