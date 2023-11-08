@@ -24,15 +24,7 @@ In this project, we aim to explore the relationship between social media sentime
 * Metadata URL: [Metadata URL, if available]
 * Data URL: [Data URL]
 * Data Type: [Data Type, e.g., JSON, API]
-
-[Description of the social media data source, including details on the type of social media platform, the kind of posts, and the date range of data.]
-
-### Datasource3: News Articles Data
-* Metadata URL: [Metadata URL, if available]
-* Data URL: [Data URL]
-* Data Type: [Data Type, e.g., CSV, JSON]
-
-[Description of the news articles data source, including information on the news outlets, topics, and date range.]
+* Description: [Text]
 
 ## Work Packages
 
@@ -43,5 +35,3 @@ In this project, we aim to explore the relationship between social media sentime
 5. Statistical Analysis and Modeling
 6. Visualization of Results
 7. Final Report and Insights
-
-[Provide a list of work packages that outline the major tasks and objectives of your project. Each work package should have a corresponding link to an issue on your project's GitHub repository for tracking progress.]
