@@ -28,10 +28,10 @@ In this project, we aim to explore the relationship between social media sentime
 
 ## Work Packages
 
-1. Data Collection and Preprocessing
-2. Sentiment Analysis on Social Media Data
-3. Sentiment Analysis on News Articles Data
-4. Integration of Sentiment Data with Stock Price Data
-5. Statistical Analysis and Modeling
-6. Visualization of Results
-7. Final Report and Insights
+1. Data Collection and Preprocessing [#1](https://github.com/mohdahmedasif/made-template/issues/1)
+2. Sentiment Analysis on Social Media Data [#2](https://github.com/mohdahmedasif/made-template/issues/2)
+3. Sentiment Analysis on News Articles Data [#3](https://github.com/mohdahmedasif/made-template/issues/3)
+4. Integration of Sentiment Data with Stock Price Data [#4](https://github.com/mohdahmedasif/made-template/issues/4)
+5. Statistical Analysis and Modeling [#5](https://github.com/mohdahmedasif/made-template/issues/5)
+6. Visualization of Results [#6](https://github.com/mohdahmedasif/made-template/issues/6)
+7. Final Report and Insights [#7](https://github.com/mohdahmedasif/made-template/issues/7)
