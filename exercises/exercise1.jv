@@ -1,0 +1,57 @@
+// Filename: exercise1.jv
+// Language: Jayvee
+
+// Exercise 1: Airports
+
+// Define a pipeline named AirportPipeline
+pipeline AirportPipline {
+	
+    // HTTP extraction block configuration to retrieve CSV file
+	block AirportHttpExtractor oftype HttpExtractor
+	{
+		url: "https://opendata.rhein-kreis-neuss.de/api/v2/catalog/datasets/rhein-kreis-neuss-flughafen-weltweit/exports/csv";
+		retries: 1;
+    }
+
+	// Interpret a CSV File as a Text file
+	block AirportTextFileInterpreter oftype TextFileInterpreter	{
+	}
+
+	// Processes an input file, treating it as a CSV file with string values separated by a specified delimiter
+	block AirportCSVInterpreter oftype CSVInterpreter {
+		delimiter: ';';
+	}
+
+	// Converting a sheet into a table, matching header row names with provided columns and assigning them sequentially
+	block AirportTableInterpreter oftype TableInterpreter {
+		header: true;
+		columns: [
+			"column_1" oftype integer,
+			"column_2" oftype text,
+			"column_3" oftype text,
+			"column_4" oftype text,
+			"column_5" oftype text,
+			"column_6" oftype text,
+			"column_7" oftype decimal,
+			"column_8" oftype decimal,
+			"column_9" oftype integer,
+			"column_10" oftype decimal,
+			"column_11" oftype text,
+			"column_12" oftype text,
+			"geo_punkt" oftype text,
+		];
+	}
+
+	// Creating & Loading a Table into a SQLite database
+	block AirportSQLiteLoader oftype SQLiteLoader {
+		table: "airports";
+		file: "./airports.sqlite";
+	}
+
+	// Define the pipeline structure
+    AirportHttpExtractor
+        -> AirportTextFileInterpreter
+        -> AirportCSVInterpreter
+        -> AirportTableInterpreter
+        -> AirportSQLiteLoader;
+}
