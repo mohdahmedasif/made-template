@@ -1,3 +1,7 @@
 .DS_Store
 /data/*
+/exercises/venv/*
+/project/kaggle.json
+/project/venv/*
+/project/.ipynb_checkpoints/*
 !/data/.gitkeep
