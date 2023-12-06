@@ -95,3 +95,10 @@ This Python script automates the process of downloading datasets from Kaggle, pr
 
    ```bash
    bash pipeline.sh
+   ```
+   
+### Run System Test Using `tests.sh`
+   
+   ```bash
+   bash tests.sh
+   ```
