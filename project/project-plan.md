@@ -58,19 +58,19 @@ This Python script automates the process of downloading datasets from Kaggle, pr
 
 ## Setup
 
-1. **Install Required Packages:**
-   - Install the required Python packages by running the following command in your terminal or command prompt:
-
-     ```bash
-     pip install pandas sqlalchemy kaggle
-     ```
-
-2. **Create a Virtual Environment (Optional):**
+1. **Create a Virtual Environment (Optional):**
    - It's recommended to create a virtual environment before installing packages. Use the following commands:
 
      ```bash
      python -m venv venv
      source venv/bin/activate  # On Windows: venv\Scripts\activate
+     ```
+
+2. **Install Required Packages:**
+   - Install the required Python packages by running the following command in your terminal or command prompt:
+
+     ```bash
+     pip install -r requirements.txt
      ```
 
 ## Running the Code
