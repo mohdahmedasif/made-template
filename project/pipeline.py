@@ -2,7 +2,6 @@ import os
 import zipfile
 import pandas as pd
 from datetime import datetime
-from database import create_tables
 from sentiment import analyze_sentiment
 
 # Set the Kaggle API configuration directory to a writable location
