@@ -73,38 +73,12 @@ This Python script automates the process of downloading datasets from Kaggle, pr
      pip install -r requirements.txt
      ```
 
-## Running the Code
-
-1. **Configure Kaggle API:**
-   - Set the Kaggle API configuration directory to a writable location by updating the line:
-
-     ```python
-     os.environ['KAGGLE_CONFIG_DIR'] = './'
-     ```
-
-   - Ensure that your Kaggle API key (`kaggle.json`) is in the specified location.
-
-2. **Configure Database File:**
-   - Update the `database_file` variable with the desired path for the SQLite database file:
-
-     ```python
-     database_file = '../data/made-project.sqlite'
-     ```
-
-3. **Run the Script:**
-   - Execute the script in your terminal or command prompt:
-
-     ```bash
-     python your_script_name.py
-     ```
-
-     Replace `your_script_name.py` with the actual filename of your script.
-
-4. **Monitor Progress:**
-   - The script will download datasets, preprocess the data, and migrate it into the SQLite database.
-   - Progress updates will be printed in the console.
 
 ## Additional Information
+
+- **Monitor Progress:**
+   - The script will download datasets, preprocess the data, and migrate it into the SQLite database.
+   - Progress updates will be printed in the console.
 
 - **Downloaded Datasets Location:**
   - The downloaded datasets will be stored in the specified `download_directory` (default: '../data/raw').
@@ -119,7 +93,5 @@ This Python script automates the process of downloading datasets from Kaggle, pr
 
 ### Run Pipeline Using `pipeline.sh`
 
-1. Make the script executable:
-
    ```bash
-   chmod +x pipeline.sh
+   bash pipeline.sh
