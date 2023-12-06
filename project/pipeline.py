@@ -109,6 +109,9 @@ def preprocess_stock_data(dataframes):
         'Volume': 'volume'
     })
 
+    # Added to Reduce the processing time
+    merged_data = merged_data[merged_data['date'].dt.year == 2021]
+
     return merged_data
 
 def preprocess_source2_news(dataframes):
@@ -130,6 +133,10 @@ def preprocess_source2_news(dataframes):
     })
 
     bbc_news['date'] = pd.to_datetime(bbc_news['date'], format='%a, %d %b %Y %H:%M:%S %Z', errors='coerce')
+    
+    # Added to Reduce the processing time
+    bbc_news = bbc_news[bbc_news['date'].dt.year == 2021]
+
     bbc_news['sentiment_compound'] = bbc_news['title'].apply(analyze_sentiment)
     bbc_news['keywords'] = ''
     bbc_news['source'] = '2'
@@ -150,6 +157,10 @@ def preprocess_source3_news(dataframes):
     })
 
     headlines['date'] = pd.to_datetime(headlines['date'], format='%Y%m%d', errors='coerce')
+    
+    # Added to Reduce the processing time
+    headlines = headlines[headlines['date'].dt.year == 2021]
+
     headlines['sentiment_compound'] = headlines['title'].apply(analyze_sentiment)
     headlines['keywords'] = ''
     headlines['source'] = '3'
