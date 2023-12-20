@@ -132,8 +132,9 @@ def preprocess_source2_news(dataframes):
         'description': 'description'
     })
 
+    # Convert 'date' to datetime
     bbc_news['date'] = pd.to_datetime(bbc_news['date'], format='%a, %d %b %Y %H:%M:%S %Z', errors='coerce')
-    
+
     # Added to Reduce the processing time
     bbc_news = bbc_news[bbc_news['date'].dt.year == 2021]
 
@@ -157,7 +158,7 @@ def preprocess_source3_news(dataframes):
     })
 
     headlines['date'] = pd.to_datetime(headlines['date'], format='%Y%m%d', errors='coerce')
-    
+
     # Added to Reduce the processing time
     headlines = headlines[headlines['date'].dt.year == 2021]
 
