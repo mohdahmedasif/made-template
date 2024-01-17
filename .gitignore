@@ -4,4 +4,5 @@
 /project/kaggle.json
 /project/venv/*
 /project/.ipynb_checkpoints/*
+/project/.pptx
 !/data/.gitkeep
