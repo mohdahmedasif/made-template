@@ -35,20 +35,22 @@ with open(data_path, 'r') as file:
 columns = ['Geraet', 'Hersteller', 'Model', 'Monat', 'Temperatur in °C (DWD)', 'Batterietemperatur in °C', 'Geraet aktiv']
 df = pd.DataFrame(data, columns=columns)
 
-# Convert numeric columns from string to float
+# Convert 'Geraet' to integer
 df['Geraet'] = pd.to_numeric(df['Geraet'], errors='coerce')
+
+# Convert temperature columns from string to float and handle comma as decimal separator
 df['Temperatur in °C (DWD)'] = pd.to_numeric(df['Temperatur in °C (DWD)'].str.replace(',', '.'), errors='coerce')
 df['Batterietemperatur in °C'] = pd.to_numeric(df['Batterietemperatur in °C'].str.replace(',', '.'), errors='coerce')
 
 # Rename columns
 df.rename(columns={'Temperatur in °C (DWD)': 'Temperatur', 'Batterietemperatur in °C': 'Batterietemperatur'}, inplace=True)
 
-# Step 3: Transform Data
+# Step 3: Transform Data - Correct Temperature Conversion
 def celsius_to_fahrenheit(celsius):
-    return round((celsius * 9/5) + 32, 2)
+    return round((celsius * 9.0 / 5.0) + 32, 2)
 
-df['Temperatur'] = df['Temperatur'].apply(celsius_to_fahrenheit)
-df['Batterietemperatur'] = df['Batterietemperatur'].apply(celsius_to_fahrenheit)
+df['Temperatur'] = df['Temperatur'].apply(lambda x: celsius_to_fahrenheit(x) if pd.notnull(x) else x)
+df['Batterietemperatur'] = df['Batterietemperatur'].apply(lambda x: celsius_to_fahrenheit(x) if pd.notnull(x) else x)
 
 # Step 4: Validate Data
 df.dropna(inplace=True)  # Remove rows with missing values
