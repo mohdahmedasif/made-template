@@ -3,73 +3,53 @@
 
 # Exercise 4: Mowesta
 
-import pandas as pd
-import urllib.request
-import zipfile
 import os
-import sqlite3
+import zipfile
+import sqlalchemy
+import urllib.request
+import pandas as pd
 import shutil
 
+# Define the temperature conversion function
+def celsius_to_fahrenheit(temp_cels):
+    return (temp_cels * 9 / 5) + 32
+
 # Step 1: Download and Unzip Data
-url = 'https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip'
-zip_path = 'mowesta_dataset.zip'
-urllib.request.urlretrieve(url, zip_path)
+URL = "https://www.mowesta.com/data/measure/mowesta-dataset-20221107.zip"
+urllib.request.urlretrieve(URL, "data.zip")
 
-with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-    zip_ref.extractall('mowesta_data')
-os.remove(zip_path)
+with zipfile.ZipFile('data.zip', 'r') as zip_ref:
+    zip_ref.extractall("mowesta_data")
 
-# Step 2: Reshape Data
-data_path = 'mowesta_data/data.csv'
+# Step 2: Load and Transform Data
+fields = ["Geraet", "Hersteller", "Model", "Monat", "Temperatur in °C (DWD)", "Batterietemperatur in °C", "Geraet aktiv"]
+df = pd.read_csv('mowesta_data/data.csv', sep=";", usecols=fields, encoding='utf-8', decimal=",")
+df.rename(columns={"Temperatur in °C (DWD)": "Temperatur", "Batterietemperatur in °C": "Batterietemperatur"}, inplace=True)
 
-# Manually read and process the CSV file
-data = []
-with open(data_path, 'r') as file:
-    for line in file:
-        fields = line.strip().split(';')
-        # Extract only the first 7 fields
-        if len(fields) >= 7:
-            data.append(fields[:7])
+# Apply temperature conversion
+df['Temperatur'] = celsius_to_fahrenheit(df['Temperatur'])
+df['Batterietemperatur'] = celsius_to_fahrenheit(df['Batterietemperatur'])
 
-# Create DataFrame from the processed data
-columns = ['Geraet', 'Hersteller', 'Model', 'Monat', 'Temperatur in °C (DWD)', 'Batterietemperatur in °C', 'Geraet aktiv']
-df = pd.DataFrame(data, columns=columns)
-
-# Convert 'Geraet' to integer
-df['Geraet'] = pd.to_numeric(df['Geraet'], errors='coerce')
-
-# Convert temperature columns from string to float and handle comma as decimal separator
-df['Temperatur in °C (DWD)'] = pd.to_numeric(df['Temperatur in °C (DWD)'].str.replace(',', '.'), errors='coerce')
-df['Batterietemperatur in °C'] = pd.to_numeric(df['Batterietemperatur in °C'].str.replace(',', '.'), errors='coerce')
-
-# Rename columns
-df.rename(columns={'Temperatur in °C (DWD)': 'Temperatur', 'Batterietemperatur in °C': 'Batterietemperatur'}, inplace=True)
-
-# Step 3: Transform Data - Correct Temperature Conversion
-def celsius_to_fahrenheit(celsius):
-    if pd.isna(celsius):
-        return None
-    return round((celsius * 9.0 / 5.0) + 32, 2)
-
-df['Temperatur'] = df['Temperatur'].apply(celsius_to_fahrenheit)
-df['Batterietemperatur'] = df['Batterietemperatur'].apply(celsius_to_fahrenheit)
-
-# Step 4: Validate Data
-df.dropna(inplace=True)  # Remove rows with missing values
+# Step 3: Validate Data
 df = df[df['Geraet'] > 0]
+df = df[(df['Monat'] >= 1) & (df['Monat'] <= 12)]
+df = df[(df['Temperatur'] >= -459.67) & (df['Temperatur'] <= 212)]
+df = df[(df['Batterietemperatur'] >= -459.67) & (df['Batterietemperatur'] <= 212)]
+valid_gear_aktiv_values = ["Ja", "Nein"]
+df = df[df['Geraet aktiv'].isin(valid_gear_aktiv_values)]
 
-# Step 5: Write Data to SQLite Database
-conn = sqlite3.connect('temperatures.sqlite')
-df.to_sql('temperatures', conn, if_exists='replace', index=False, dtype={
-    'Geraet': 'INTEGER',
-    'Hersteller': 'TEXT',
-    'Model': 'TEXT',
-    'Monat': 'INTEGER',
-    'Temperatur': 'REAL',
-    'Batterietemperatur': 'REAL',
-    'Geraet aktiv': 'TEXT'
+# Step 4: Write Data to SQLite Database
+engine = sqlalchemy.create_engine('sqlite:///temperatures.sqlite')
+df.to_sql('temperatures', engine, if_exists='replace', index=False, dtype={
+    "Geraet": sqlalchemy.BIGINT,
+    "Hersteller": sqlalchemy.TEXT,
+    "Model": sqlalchemy.TEXT,
+    "Monat": sqlalchemy.BIGINT,
+    "Temperatur": sqlalchemy.FLOAT,
+    "Batterietemperatur": sqlalchemy.FLOAT,
+    "Geraet aktiv": sqlalchemy.TEXT,
 })
-conn.close()
 
-# Delete the mowesta_data folder
-shutil.rmtree('mowesta_data')
+# Cleanup: Delete downloaded files and extracted folder
+os.remove("data.zip")
+shutil.rmtree("mowesta_data")
