@@ -3,6 +3,11 @@
 
 # Exercise 4: Mowesta
 
+# Filename: exercise4.py
+# Language: Python
+
+# Exercise 4: Mowesta
+
 import pandas as pd
 import urllib.request
 import zipfile
@@ -71,3 +76,4 @@ conn.close()
 
 # Delete the mowesta_data folder
 shutil.rmtree('mowesta_data')
+
