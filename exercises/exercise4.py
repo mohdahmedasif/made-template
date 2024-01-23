@@ -22,36 +22,47 @@ os.remove(zip_path)
 # Step 2: Reshape Data
 data_path = 'mowesta_data/data.csv'
 
-# Read the CSV with flexible handling of bad lines
-try:
-    df = pd.read_csv(data_path, delimiter=';', decimal=',', on_bad_lines='skip')
-except Exception as e:
-    print("Error reading the CSV file:", e)
-    exit()
+# Manually read and process the CSV file
+data = []
+with open(data_path, 'r') as file:
+    for line in file:
+        fields = line.strip().split(';')
+        # Extract only the first 7 fields
+        if len(fields) >= 7:
+            data.append(fields[:7])
 
-# Select and rename the required columns
-df = df[['Geraet', 'Hersteller', 'Model', 'Monat', 'Temperatur in °C (DWD)', 'Batterietemperatur in °C', 'Geraet aktiv']]
+# Create DataFrame from the processed data
+columns = ['Geraet', 'Hersteller', 'Model', 'Monat', 'Temperatur in °C (DWD)', 'Batterietemperatur in °C', 'Geraet aktiv']
+df = pd.DataFrame(data, columns=columns)
+
+# Convert numeric columns from string to float
+df['Geraet'] = pd.to_numeric(df['Geraet'], errors='coerce')
+df['Temperatur in °C (DWD)'] = pd.to_numeric(df['Temperatur in °C (DWD)'].str.replace(',', '.'), errors='coerce')
+df['Batterietemperatur in °C'] = pd.to_numeric(df['Batterietemperatur in °C'].str.replace(',', '.'), errors='coerce')
+
+# Rename columns
 df.rename(columns={'Temperatur in °C (DWD)': 'Temperatur', 'Batterietemperatur in °C': 'Batterietemperatur'}, inplace=True)
 
 # Step 3: Transform Data
 def celsius_to_fahrenheit(celsius):
-    return (celsius * 9/5) + 32
+    return round((celsius * 9/5) + 32, 2)
 
 df['Temperatur'] = df['Temperatur'].apply(celsius_to_fahrenheit)
 df['Batterietemperatur'] = df['Batterietemperatur'].apply(celsius_to_fahrenheit)
 
 # Step 4: Validate Data
+df.dropna(inplace=True)  # Remove rows with missing values
 df = df[df['Geraet'] > 0]
 
 # Step 5: Write Data to SQLite Database
 conn = sqlite3.connect('temperatures.sqlite')
 df.to_sql('temperatures', conn, if_exists='replace', index=False, dtype={
-    'Geraet': 'BIGINT',
+    'Geraet': 'INTEGER',
     'Hersteller': 'TEXT',
     'Model': 'TEXT',
-    'Monat': 'TEXT',
-    'Temperatur': 'FLOAT',
-    'Batterietemperatur': 'FLOAT',
+    'Monat': 'INTEGER',
+    'Temperatur': 'REAL',
+    'Batterietemperatur': 'REAL',
     'Geraet aktiv': 'TEXT'
 })
 conn.close()
