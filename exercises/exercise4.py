@@ -52,10 +52,12 @@ df.rename(columns={'Temperatur in °C (DWD)': 'Temperatur', 'Batterietemperatur 
 
 # Step 3: Transform Data - Correct Temperature Conversion
 def celsius_to_fahrenheit(celsius):
+    if pd.isna(celsius):
+        return None
     return round((celsius * 9.0 / 5.0) + 32, 2)
 
-df['Temperatur'] = df['Temperatur'].apply(lambda x: celsius_to_fahrenheit(x) if pd.notnull(x) else x)
-df['Batterietemperatur'] = df['Batterietemperatur'].apply(lambda x: celsius_to_fahrenheit(x) if pd.notnull(x) else x)
+df['Temperatur'] = df['Temperatur'].apply(celsius_to_fahrenheit)
+df['Batterietemperatur'] = df['Batterietemperatur'].apply(celsius_to_fahrenheit)
 
 # Step 4: Validate Data
 df.dropna(inplace=True)  # Remove rows with missing values
